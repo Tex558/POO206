@@ -33,3 +33,25 @@ print(x,y,z)
 print(type (x)) #type = ultimo tipo de la cadena
 print(type (y))
 print(type (z))
+
+#4. solicitud de datos 
+
+a= input("introduce cualquier dato: ")
+b= int(input("introduce un numero entero: "))
+c= float(input("introduce un numero decimal: "))
+
+print(a,b,c)
+
+#5. boolean, comparacion y logicos
+
+print(10 > 9) # mayor que
+print(10 < 9) # menor que
+print(10 == 9) # igual a
+print(10 >= 9) # mayor o igual
+print(10 <= 9) # menor o igual
+print(10 != 9) # diferente de
+
+x= 1
+print(x<5 and x<10) #comparacion and
+print(x<5 or x<10) #comparacion or
+print(not(x<5 and x<10)) #comparacion not (and invertida)
