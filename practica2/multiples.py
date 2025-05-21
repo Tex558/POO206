@@ -1,5 +1,5 @@
 try:
-    numero = int(input("Introduce un número: "))
+    numero = int(input("Introduce un numero: "))
     resultado = 10 / numero
 except (ValueError, ZeroDivisionError):
-    print("Error: Valor no válido o división entre cero.")
+    print("Error: Valor no valido o division entre cero.")
