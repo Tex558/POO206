@@ -5,10 +5,10 @@ while True:
             return frase
         
         try: 
-            print("Introduce 'a' para cerrar \n")
+            print("Introduce 'p' para cerrar \n")
             frase= input("Ingresa una frase para analizar: ").lower()
             Numeros(frase)
-            if frase == "a":
+            if frase == "p":
                 print("\nFin del programa")
                 break
             
