@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+<head>
+
+<body>
+    <h2> Vista del Formulario </h2>
+    <a href="/consulta"> Abrir vista Consulta </a>
+
+    <br>
+    <br>
+    <br>
+
+    {% with mensajes = get_flashed_messages()%}
+    {% if mensajes %}
+            {% for msj in mensajes %}   
+                <h4 style="color:blue">{{ msj }}</h4>
+            {% endfor %}
+        {% endif %}
+    {%endwith%}
+
+    <form action="/guardarAlbum" method="POST">
+        <input type="text" name="txtTitulo" placeholder="Titulo">
+        <input type="text" name="txtArtista" placeholder="Artista">
+        <input type="number" name="txtAnio" placeholder="Año de publicación">
+        <br>
+        <button type="submit"> Guardar album </button>
+    </form>
+
+</body>
+
+</html>
