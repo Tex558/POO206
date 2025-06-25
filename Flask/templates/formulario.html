@@ -23,12 +23,40 @@
     {%endwith%}
 
     <form action="/guardarAlbum" method="POST">
-        <input type="text" name="txtTitulo" placeholder="Titulo">
-        <input type="text" name="txtArtista" placeholder="Artista">
-        <input type="number" name="txtAnio" placeholder="Año de publicación">
-        <br>
+        <input type = "text" name = "txtTitulo" placeholder="Titulo" value = "{{ request.form.txtTitulo }}">
+        {% if errores and errores.txtTitulo %}
+            <p style="color:red">{{errores.txtTitulo}}</p>
+        {% endif %}
+        <input type = "text" name = "txtArtista" placeholder="Artista" value = "{{ request.form.txtArtista }}">
+        {% if errores and errores.txtArtista %}
+            <p style="color:red">{{errores.txtArtista}}</p>
+        {% endif %}
+        <input type = "number" name = "txtAnio" placeholder="Año de publicación" value = "{{ request.form.txtAnio }}">
+        {% if errores and errores.txtAnio %}
+            <p style="color:red">{{errores.txtAnio}}</p>
+        {% endif %}
         <button type="submit"> Guardar album </button>
     </form>
+
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Id:</td>
+                <td>album:</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for album in albums %}
+                <tr>
+                    <td>{{ album.0 }}</td>
+                    <td> <a href="/detalles/{{ album.0 }}">{{ album.1 }}</a> </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 
