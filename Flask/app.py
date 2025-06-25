@@ -24,7 +24,7 @@ def DB_check():
         return jsonify( {'status':'error','message':str(e)} ),500
 
 
-#Ruta principal y de consulta
+#Ruta principal
 @app.route('/')
 def home():
     try:
@@ -40,9 +40,23 @@ def home():
     finally:
         cursor.close()
 
-@app.route('/consulta')
-def consulta():
-    return render_template('consulta.html')
+#Ruta con parametros
+#@app.route('/saludo/<nombre>')
+    #return 'Un saludo a la grasa '+ nombre +'!'
+
+#Ruta de detalle
+@app.route('/detalles/<int:id>')
+def detalle(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM Albums WHERE id=%s', (id,))
+        consultaId = cursor.fetchone()
+        return render_template('consulta.html', Albums=consultaId)
+    except Exception as e:
+        print('Error al consultar por id:' +e)
+        return redirect(url_for('home'))
+    finally:
+        cursor.close()
 
 #Ruta insert
 @app.route('/guardarAlbum', methods=['POST'])
