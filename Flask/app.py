@@ -40,10 +40,6 @@ def home():
     finally:
         cursor.close()
 
-#Ruta con parametros
-#@app.route('/saludo/<nombre>')
-    #return 'Un saludo a la grasa '+ nombre +'!'
-
 #Ruta de detalle
 @app.route('/detalles/<int:id>')
 def detalle(id):
@@ -58,29 +54,75 @@ def detalle(id):
     finally:
         cursor.close()
 
-#Ruta insert
+#Rta de editar
+@app.route('/editar/<int:id>')
+def editar(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM Albums WHERE id=%s', (id,))
+        album = cursor.fetchone()
+        return render_template('formUpdate.html', album=album)
+    except Exception as e:
+        print('Error al obtener álbum:', e)
+        return redirect(url_for('home'))
+    finally:
+        cursor.close()
+
+#Ruta de actualizar
+@app.route('/actualizarAlbum/<int:id>', methods=['POST'])
+def actualizarAlbum(id):
+    datos = request.form
+    titulo = datos.get('txtTitulo', '').strip()
+    artista = datos.get('txtArtista', '').strip()
+    año = datos.get('txtAnio', '').strip()
+    errores = {}
+
+    if not titulo:
+        errores['txtTitulo'] = 'El título es obligatorio'
+    if not artista:
+        errores['txtArtista'] = 'El artista es obligatorio'
+    if not año:
+        errores['txtAnio'] = 'El año es obligatorio'
+    elif not año.isdigit() or int(año) < 1800 or int(año) > 2030:
+        errores['txtAnio'] = 'Ingrese un año válido'
+
+    if errores:
+        return render_template('formUpdate.html', album=(id, titulo, artista, año), errores=errores)
+
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('UPDATE Albums SET Titulo=%s, Artista=%s, Año=%s WHERE id=%s', (titulo, artista, año, id))
+        mysql.connection.commit()
+        flash('Álbum actualizado correctamente')
+    except Exception as e:
+        mysql.connection.rollback()
+        flash('Error al actualizar: ' + str(e))
+    finally:
+        cursor.close()
+
+    return redirect(url_for('home'))
+
+#Ruta de insert
 @app.route('/guardarAlbum', methods=['POST'])
 def guardar():
 
     errores = {}
 
-    #obtenen datos al ingresar
     titulo = request.form.get('txtTitulo','').strip()
     artista = request.form.get('txtArtista','').strip()
     anio = request.form.get('txtAnio','').strip()
 
-    #manejo de campos vacios
     if not titulo:
         errores['txtTitulo'] = 'Nombre del album obligatorio'
     if not artista:
         errores['txtArtista'] = 'Nombre del artista obligatorio'
     if not anio:
-        errores['txtAnio'] = 'Año del album obligatorio'
+        errores['txtAnio'] = 'Falta el año del album'
     elif not anio.isdigit() or int(anio) < 1800 or int(anio) > 2030:
-        errores['txtAnio'] = 'En año solo ingresar un año valido'
+        errores['txtAnio'] = 'Ingresar un año valido'
         
     if not errores:
-    #Intentar ejecutar el insert
+
         try:
             cursor= mysql.connection.cursor()
             cursor.execute('insert into albums(Titulo,Artista,Año) values(%s,%s,%s)',(titulo, artista, anio))
@@ -90,7 +132,7 @@ def guardar():
         
         except Exception as e:
             mysql.connection.rollback()
-            flash ('Error al guardar BD: ' + str(e))
+            flash ('Error al guardar: ' + str(e))
             return redirect(url_for('home')) 
 
         finally:
