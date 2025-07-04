@@ -29,7 +29,7 @@ def DB_check():
 def home():
     try:
         cursor= mysql.connection.cursor()
-        cursor.execute('SELECT * FROM albums')
+        cursor.execute('SELECT * FROM albums WHERE state = 1')
         consultaTodo= cursor.fetchall()
         return render_template('formulario.html', errores={}, albums=consultaTodo)
 
@@ -100,6 +100,38 @@ def actualizarAlbum(id):
     finally:
         cursor.close()
 
+    return redirect(url_for('home'))
+
+#Ruta de eliminar
+@app.route('/eliminar/<int:id>')
+def confirmarEliminacion(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM Albums WHERE id=%s', (id,))
+        album = cursor.fetchone()
+        if not album:
+            flash('Álbum no encontrado')
+            return redirect(url_for('home'))
+        return render_template('confirmDel.html', album=album)
+    except Exception as e:
+        flash('Error: ' + str(e))
+        return redirect(url_for('home'))
+    finally:
+        cursor.close()
+
+# Ejecutar eliminar
+@app.route('/confirmacion/<int:id>', methods=['POST'])
+def eliminarAlbum(id):
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute('UPDATE Albums SET state = 0 WHERE id=%s', (id,))
+        mysql.connection.commit()
+        flash('Álbum eliminado correctamente')
+    except Exception as e:
+        mysql.connection.rollback()
+        flash('Error: ' + str(e))
+    finally:
+        cursor.close()
     return redirect(url_for('home'))
 
 #Ruta de insert
