@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta</title>
+<head>
+
+<body>
+    <h2>Consulta</h2>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Pelicula</td>
+                <td>Director</td>
+                <td>Año</td>
+                <td>Genero</td>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ peliculas.0 }}</td>
+                    <td>{{ peliculas.1 }}</td>
+                    <td>{{ peliculas.2 }}</td>
+                    <td>{{ peliculas.3 }}</td>
+                    <td>{{ peliculas.4 }}</td>
+                    <br>
+                    <td><a href="/editar/{{ peliculas.0 }}">Actualizar</a></td>
+                    <td><a href="/eliminar/{{ peliculas.0 }}">Eliminar</a></td>
+                </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="/"> Regresar al Formulario </a>
+</body>
+
+</html>

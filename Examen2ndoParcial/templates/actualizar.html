@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Pelicula</title>
+</head>
+<body>
+    <h2>Actualiza Pelicula</h2>
+
+    <form action="/actualizarPeli/{{ pelicula.0 }}" method="POST">
+        <input type="text" name="txtTitulo" placeholder="Título" value="{{ pelicula.1 }}">
+        {% if errores and errores.txtTitulo %}
+            <p style="color:red">{{ errores.txtTitulo }}</p>
+        {% endif %}
+
+        <input type="text" name="txtDirector" placeholder="Director" value="{{ pelicula.2 }}">
+        {% if errores and errores.txtArtista %}
+            <p style="color:red">{{ errores.txtArtista }}</p>
+        {% endif %}
+
+        <input type="number" name="txtAnio" placeholder="Año de publicación" value="{{ pelicula.3 }}">
+        {% if errores and errores.txtAnio %}
+            <p style="color:red">{{ errores.txtAnio }}</p>
+        {% endif %}
+
+        <input type="text" name="txtGenero" placeholder="Genero de la pelicula" value="{{ pelicula.4 }}">
+        {% if errores and errores.txtGenero %}
+            <p style="color:red">{{ errores.txtGenero }}</p>
+        {% endif %}
+
+        <button type="submit">Actualizar</button>
+    </form>
+
+    <br>
+    <a href="/">Regresar al Formulario</a>
+</body>
+</html>

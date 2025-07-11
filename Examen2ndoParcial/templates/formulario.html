@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+<head>
+
+<body>
+    <h2> Formulario </h2>
+
+    <br>
+    <br>
+    <br>
+
+    {% with mensajes = get_flashed_messages()%}
+    {% if mensajes %}
+            {% for msj in mensajes %}   
+                <h4 style="color:blue">{{ msj }}</h4>
+            {% endfor %}
+        {% endif %}
+    {%endwith%}
+
+    <form action="/guardarPeli" method="POST">
+        <input type = "text" name = "txtTitulo" placeholder="Titulo" value = "{{ request.form.txtTitulo }}">
+        {% if errores and errores.txtTitulo %}
+            <p style="color:red">{{errores.txtTitulo}}</p>
+        {% endif %}
+        <input type = "text" name = "txtDirector" placeholder="Director" value = "{{ request.form.txtDirector }}">
+        {% if errores and errores.txtDirector %}
+            <p style="color:red">{{errores.txtDirector}}</p>
+        {% endif %}
+        <input type = "number" name = "txtAnio" placeholder="Año de publicación" value = "{{ request.form.txtAnio }}">
+        {% if errores and errores.txtAnio %}
+            <p style="color:red">{{errores.txtAnio}}</p>
+        {% endif %}
+        <input type="ntext" name="txtGenero" placeholder="Genero de la pelicula" value="{{ request.form.txtGenero }}">
+        {% if errores and errores.txtGenero %}
+            <p style="color:red">{{ errores.txtGenero }}</p>
+        {% endif %}
+        <button type="submit"> Guardar peliucla </button>
+    </form>
+
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Peliculas</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for pelicula in peliculas %}
+                <tr>
+                    <td>{{ pelicula.0 }}</td>
+                    <td> <a href="/detalles/{{ pelicula.0 }}">{{ pelicula.1 }}</a> </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>
