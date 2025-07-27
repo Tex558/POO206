@@ -1,21 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmar eliminación</title>
-</head>
-<body>
-    <h1 style="color:purple">¿Seguro que quieres eliminar este album?</h1>
+{% extends 'plantilla.html' %}
 
-    <form action="/confirmacion/{{ album.0 }}" method="post">
-        <input type="text" name="titulo" value="{{ album.1 }}" disabled>
-        <input type="text" name="artista" value="{{ album.2 }}" disabled>
-        <input type="number" name="anio" value="{{ album.3 }}" disabled>
-        <button type="submit">Eliminar Álbum</button>
-    </form>
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="display-6 text-danger mt-5 mb-4">¿Seguro que quieres eliminar este álbum?</h4>
 
-    <br>
-    <a href="/"> Regresar al Formulario </a>
-</body>
-</html>
+            <form action="/confirmacion/{{ album.0 }}" method="post">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="titulo" value="{{ album.1 }}" disabled>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="artista" value="{{ album.2 }}" disabled>
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" name="anio" value="{{ album.3 }}" disabled>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger">Eliminar Álbum</button>
+                </div>
+            </form>
+
+            <a href="/" class="btn btn-secondary mt-3">Regresar al Formulario</a>
+        </div>
+    </div>
+{% endblock %}

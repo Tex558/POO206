@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta</title>
-<head>
+{% extends 'plantilla.html' %}
 
-<body>
-    <h2>Consulta</h2>
-    <table>
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Album</td>
-                <td>Artista</td>
-                <td>Año</td>
-            </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td>{{ Albums.0 }}</td>
-                    <td>{{ Albums.1 }}</td>
-                    <td>{{ Albums.2 }}</td>
-                    <td>{{ Albums.3 }}</td>
-                    <br>
-                    <td><a href="/editar/{{ Albums.0 }}">Actualizar</a></td>
-                    <td><a href="/eliminar/{{ Albums.0 }}">Eliminar</a></td>
-                </tr>
-        </tbody>
-    </table>
-    <br>
-    <a href="/"> Regresar al Formulario </a>
-</body>
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <h4 class="display-5 text-primary mt-5 mb-4">Consulta</h4>
 
-</html>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Album</th>
+                        <th>Artista</th>
+                        <th>Año</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ Albums.0 }}</td>
+                        <td>{{ Albums.1 }}</td>
+                        <td>{{ Albums.2 }}</td>
+                        <td>{{ Albums.3 }}</td>
+                        <td>
+                            <a href="/editar/{{ Albums.0 }}" class="btn btn-sm btn-primary">Actualizar</a>
+                            <a href="/eliminar/{{ Albums.0 }}" class="btn btn-sm btn-danger ms-2">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="/" class="btn btn-secondary mt-3">Regresar al Formulario</a>
+        </div>
+    </div>
+{% endblock %}
